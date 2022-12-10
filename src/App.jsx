@@ -1,18 +1,89 @@
 import styled from 'styled-components';
+import Header from './modules/Header';
+import Cards from './modules/Cards';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   background-color: black;
   color: white;
   height: 100vh;
-  font-size: 4rem;
-  font-weight: 700;
 `;
 
 function App() {
-  return <Wrapper>test</Wrapper>;
+  const [round, setRound] = useState(1);
+  const [score, setScore] = useState({ score: 0, highScore: 0 });
+  const [cards, setCards] = useState([]);
+
+  const addToScore = () => {
+    if (score.score + 1 > score.highScore) {
+      setScore((prev) => {
+        ({
+          score: prev.score + 1,
+          highScore: prev.highScore + 1,
+        });
+      });
+    } else {
+      setScore((prev) => {
+        ({
+          ...prev,
+          score: prev.score + 1,
+        });
+      });
+    }
+  };
+
+  const resetScore = () => {
+    setScore((prev) => {
+      ({
+        ...prev,
+        score: 0,
+      });
+    });
+  };
+
+  /* function which is to take the number of required cards (based on the round) and an array of the available 
+  card objects. It will return an array which will be passed to state via setCards() (during a useEffect call which tracks
+    the state variable 'round')*/
+
+  const createCardsArray = (allCards, requiredCards) => {
+    const newArr = [];
+    for (let i = 0; i < requiredCards.length; i++) {
+      const random = Math.floor(Math.random() * allCards.length);
+      if (newArr.indexOf(allCards[random]) === -1) {
+        newArr.push(allCards[random]);
+        i += 1;
+      }
+    }
+    return newArr;
+  };
+
+    /* shuffle function using the Durstenfield shuffle */
+  const shuffleArray = () => {
+    const current = [...cards];
+    for (let i = current.length - 1; i > 0; i--) {
+      const random = Math.floor(Math.random() * (i + 1));
+      const temp = current[i];
+      current[1] = current[random];
+      current[random] = temp;
+    }
+  };
+
+  const handleClick = () => {
+    /* if card is clicked for the second time -- function to reset round, score and cards
+    addToScore()
+    function to check if game is over (all 4 rounds have been completed)
+    function to check if round is complete (a filter that checks all cards in current state array and if all have
+      been clicked then round is increased and new (larger )array is added) */
+  };
+
+  return (
+    <Wrapper>
+      <Header score={score} round={round} />
+      <Cards />
+    </Wrapper>
+  );
 }
 
 export default App;
