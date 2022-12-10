@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Header from './modules/Header';
 import Cards from './modules/Cards';
 import { useState } from 'react';
+import cardList from './modules/utils/cardData';
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,33 +44,6 @@ function App() {
     });
   };
 
-  /* function which is to take the number of required cards (based on the round) and an array of the available 
-  card objects. It will return an array which will be passed to state via setCards() (during a useEffect call which tracks
-    the state variable 'round')*/
-
-  const createCardsArray = (allCards, requiredCards) => {
-    const newArr = [];
-    for (let i = 0; i < requiredCards.length; i++) {
-      const random = Math.floor(Math.random() * allCards.length);
-      if (newArr.indexOf(allCards[random]) === -1) {
-        newArr.push(allCards[random]);
-        i += 1;
-      }
-    }
-    return newArr;
-  };
-
-    /* shuffle function using the Durstenfield shuffle */
-  const shuffleArray = () => {
-    const current = [...cards];
-    for (let i = current.length - 1; i > 0; i--) {
-      const random = Math.floor(Math.random() * (i + 1));
-      const temp = current[i];
-      current[1] = current[random];
-      current[random] = temp;
-    }
-  };
-
   const handleClick = () => {
     /* if card is clicked for the second time -- function to reset round, score and cards
     addToScore()
@@ -81,7 +55,7 @@ function App() {
   return (
     <Wrapper>
       <Header score={score} round={round} />
-      <Cards />
+      <Cards cards={cards} />
     </Wrapper>
   );
 }
