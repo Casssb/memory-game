@@ -48,10 +48,12 @@ function App() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    Promise.all(cardList.map((card) => cacheImage(card)))
-      .then(() => setLoaded(true))
-      .catch((error) => console.log(error));
-  }, []);
+    if (!loaded) {
+      Promise.all(cardList.map((card) => cacheImage(card)))
+        .then(() => setLoaded(true))
+        .catch((error) => console.log(error));
+    }
+  }, [loaded]);
 
   useEffect(() => {
     const requiredCards = returnRequiredCards(level);
@@ -72,6 +74,7 @@ function App() {
           const requiredCards = returnRequiredCards(level);
           if (shouldIncreaseLevel(shuffled, requiredCards)) {
             resetClickedStatus(cardList);
+            setLoaded(false);
             setLevel((prev) => prev + 1);
           } else {
             setCards(shuffled);
