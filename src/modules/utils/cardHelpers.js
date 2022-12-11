@@ -4,11 +4,12 @@
 
 const createCardsArray = (allCards, requiredCards) => {
   const newArr = [];
-  for (let i = 0; i < requiredCards.length; i++) {
+  let counter = 0;
+  while (counter < requiredCards) {
     const random = Math.floor(Math.random() * allCards.length);
     if (newArr.indexOf(allCards[random]) === -1) {
       newArr.push(allCards[random]);
-      i += 1;
+      counter += 1;
     }
   }
   return newArr;
@@ -16,14 +17,27 @@ const createCardsArray = (allCards, requiredCards) => {
 
 /* shuffle function using the Durstenfield shuffle */
 const shuffleArray = (cards) => {
-  const shuffled = cards;
-  for (let i = shuffled.length - 1; i > 0; i--) {
+  const temp = [...cards];
+  for (let i = temp.length - 1; i > 0; i--) {
     const random = Math.floor(Math.random() * (i + 1));
-    const temp = shuffled[i];
-    shuffled[1] = shuffled[random];
-    shuffled[random] = temp;
+    [temp[i], temp[random]] = [temp[random], temp[i]];
   }
-  return shuffled;
+  return temp;
 };
 
-export { createCardsArray, shuffleArray };
+const returnRequiredCards = (level) => {
+  switch (level) {
+    case 1:
+      return 4;
+    case 2:
+      return 8;
+    case 3:
+      return 12;
+    case 4:
+      return 24;
+    case 5:
+      return 48;
+  }
+};
+
+export { createCardsArray, shuffleArray, returnRequiredCards };

@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import Header from './modules/Header';
 import Cards from './modules/Cards';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  createCardsArray,
+  shuffleArray,
+  returnRequiredCards,
+} from './modules/utils/cardHelpers';
 import cardList from './modules/utils/cardData';
 
 const Wrapper = styled.div`
@@ -9,13 +14,21 @@ const Wrapper = styled.div`
   flex-direction: column;
   background-color: black;
   color: white;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
 `;
 
 function App() {
-  const [round, setRound] = useState(1);
+  const [level, setLevel] = useState(1);
   const [score, setScore] = useState({ score: 0, highScore: 0 });
   const [cards, setCards] = useState([]);
+  const [status, setStatus] = useState('menu');
+
+  useEffect(() => {
+    const requiredCards = returnRequiredCards(level);
+    const cardsArray = createCardsArray(cardList, requiredCards);
+    setCards(cardsArray);
+  }, [level]);
 
   const addToScore = () => {
     if (score.score + 1 > score.highScore) {
@@ -44,18 +57,16 @@ function App() {
     });
   };
 
-  const handleClick = () => {
-    /* if card is clicked for the second time -- function to reset round, score and cards
-    addToScore()
-    function to check if game is over (all 4 rounds have been completed)
-    function to check if round is complete (a filter that checks all cards in current state array and if all have
-      been clicked then round is increased and new (larger )array is added) */
+  const handleClick = (e) => {
+    e.preventDefault();
+    const shuffled = shuffleArray(cards);
+    setCards(shuffled);
   };
 
   return (
     <Wrapper>
-      <Header score={score} round={round} />
-      <Cards cards={cards} />
+      <Header score={score} level={level} />
+      <Cards cards={cards} handleClick={handleClick} />
     </Wrapper>
   );
 }

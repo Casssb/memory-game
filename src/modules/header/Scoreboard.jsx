@@ -9,10 +9,10 @@ const ScoreboardContainer = styled.div`
 `;
 
 const Scoreboard = (props) => {
-  const { score, round } = props;
+  const { score, level } = props;
   return (
     <ScoreboardContainer>
-      <p>Round: {round}</p>
+      <p>Level: {level}</p>
       <p>Score: {score.score}</p>
       <p>High Score: {score.highScore}</p>
     </ScoreboardContainer>

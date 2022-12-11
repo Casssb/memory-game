@@ -13,11 +13,11 @@ const StyledHeader = styled.header`
 `;
 
 const Header = (props) => {
-  const { score, round } = props;
+  const { score, level } = props;
   return (
     <StyledHeader>
       <Title />
-      <Scoreboard score={score} round={round} />
+      <Scoreboard score={score} level={level} />
     </StyledHeader>
   );
 };
