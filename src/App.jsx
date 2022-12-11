@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Header from './modules/Header';
 import Cards from './modules/Cards';
 import { useEffect, useState } from 'react';
@@ -8,19 +8,29 @@ import {
   returnRequiredCards,
   cacheImage,
 } from './modules/utils/cardHelpers';
+import { addToScore, resetScore } from './modules/utils/gameHelpers';
 import cardList from './modules/utils/cardData';
+
+const GlobalStyles = createGlobalStyle`
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+   }
+`;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: #181616;
   color: white;
   height: 100%;
   min-height: 100vh;
 `;
 
 function App() {
-  const [level, setLevel] = useState(2);
+  const [level, setLevel] = useState(3);
   const [score, setScore] = useState({ score: 0, highScore: 0 });
   const [cards, setCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -37,44 +47,21 @@ function App() {
     setCards(cardsArray);
   }, [level]);
 
-  const addToScore = () => {
-    if (score.score + 1 > score.highScore) {
-      setScore((prev) => {
-        ({
-          score: prev.score + 1,
-          highScore: prev.highScore + 1,
-        });
-      });
-    } else {
-      setScore((prev) => {
-        ({
-          ...prev,
-          score: prev.score + 1,
-        });
-      });
-    }
-  };
-
-  const resetScore = () => {
-    setScore((prev) => {
-      ({
-        ...prev,
-        score: 0,
-      });
-    });
-  };
-
   const handleClick = (e) => {
     e.preventDefault();
     const shuffled = shuffleArray(cards);
     setCards(shuffled);
+    addToScore(score, setScore);
   };
 
   return (
-    <Wrapper>
-      <Header score={score} level={level} />
-      <Cards cards={cards} handleClick={handleClick} cardsLoaded={loaded} />
-    </Wrapper>
+    <>
+      <GlobalStyles />
+      <Wrapper>
+        <Header score={score} level={level} />
+        <Cards cards={cards} handleClick={handleClick} cardsLoaded={loaded} />
+      </Wrapper>
+    </>
   );
 }
 

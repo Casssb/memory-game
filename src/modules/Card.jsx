@@ -10,11 +10,19 @@ const CardWrapper = styled.div`
   align-items: center;
   border: 2px solid white;
   border-radius: 5px;
-  padding: 0.2rem;
-  background-color: black;
+  padding: 0.4rem;
+  background-color: #0f0b0b;
+  width: 10rem;
+  height: 15rem;
+  text-align: center;
 
   &:hover {
     cursor: pointer;
+  }
+
+  & p {
+    color: #006680;
+    font-weight: 700;
   }
 `;
 
@@ -22,7 +30,7 @@ const ImageWrapper = styled.div`
   padding: 0.4rem;
 
   & img {
-    width: 8rem;
+    width: 7rem;
     height: 10rem;
   }
 `;
