@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import SouthParkFont from './assets/fonts/south-park.ttf';
 import Header from './modules/Header';
 import Cards from './modules/Cards';
 import { useEffect, useState } from 'react';
@@ -17,11 +18,17 @@ import {
 import cardList from './modules/utils/cardData';
 
 const GlobalStyles = createGlobalStyle`
+  @font-face {
+    font-family: 'South Park';
+    src: url(${SouthParkFont});
+  }
+
   * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    line-height: 1.2;
+    font-family:'South Park', 'Roboto', sans-serif;
    }
 `;
 
@@ -80,7 +87,7 @@ function App() {
     setCards(cardsArray);
     resetScore(setScore);
     resetClickedStatus(cardList);
-    setLevel(1)
+    setLevel(1);
   };
 
   return (
