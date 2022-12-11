@@ -4,25 +4,30 @@ import Card from './Card';
 
 const StyledMain = styled.main`
   width: 100%;
-  display: grid;
-  align-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   gap: 0.6rem;
   padding: 4rem;
 `;
 
 const Cards = (props) => {
-  const { cards, handleClick } = props;
+  const { cards, handleClick, cardsLoaded } = props;
 
   return (
     <StyledMain>
-      {cards.map((card) => (
-        <Card
-          cardImage={card.image}
-          cardName={card.name}
-          handleClick={handleClick}
-        />
-      ))}
+      {!cardsLoaded && (<h1>Loading...</h1>)}
+
+      {cardsLoaded &&
+        cards.map((card) => (
+          <Card
+            cardImage={card.image}
+            cardName={card.name}
+            handleClick={handleClick}
+            key={card.name}
+          />
+        ))}
     </StyledMain>
   );
 };

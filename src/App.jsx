@@ -6,6 +6,7 @@ import {
   createCardsArray,
   shuffleArray,
   returnRequiredCards,
+  cacheImage,
 } from './modules/utils/cardHelpers';
 import cardList from './modules/utils/cardData';
 
@@ -19,10 +20,16 @@ const Wrapper = styled.div`
 `;
 
 function App() {
-  const [level, setLevel] = useState(1);
+  const [level, setLevel] = useState(2);
   const [score, setScore] = useState({ score: 0, highScore: 0 });
   const [cards, setCards] = useState([]);
-  const [status, setStatus] = useState('menu');
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    Promise.all(cardList.map((card) => cacheImage(card)))
+      .then(() => setLoaded(true))
+      .catch((error) => console.log(error));
+  }, []);
 
   useEffect(() => {
     const requiredCards = returnRequiredCards(level);
@@ -66,7 +73,7 @@ function App() {
   return (
     <Wrapper>
       <Header score={score} level={level} />
-      <Cards cards={cards} handleClick={handleClick} />
+      <Cards cards={cards} handleClick={handleClick} cardsLoaded={loaded} />
     </Wrapper>
   );
 }

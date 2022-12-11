@@ -40,4 +40,13 @@ const returnRequiredCards = (level) => {
   }
 };
 
-export { createCardsArray, shuffleArray, returnRequiredCards };
+const cacheImage = (card) => {
+  return new Promise((resolve, reject) => {
+    const imgToLoad = new Image();
+    imgToLoad.src = card.image;
+    imgToLoad.onload = () => resolve(imgToLoad);
+    imgToLoad.onerror = (error) => reject(error);
+  });
+};
+
+export { createCardsArray, shuffleArray, returnRequiredCards, cacheImage };
