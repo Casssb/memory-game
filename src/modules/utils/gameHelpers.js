@@ -19,5 +19,8 @@ const resetScore = (setScore) => {
   }));
 };
 
+const shouldIncreaseLevel = (cards, levelTarget) => {
+  return cards.filter((card) => card.clicked).length === levelTarget;
+};
 
-export { addToScore, resetScore };
+export { addToScore, resetScore, shouldIncreaseLevel };

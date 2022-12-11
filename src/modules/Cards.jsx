@@ -17,7 +17,7 @@ const Cards = (props) => {
 
   return (
     <StyledMain>
-      {!cardsLoaded && (<h1>Loading...</h1>)}
+      {!cardsLoaded && <h1>Loading...</h1>}
 
       {cardsLoaded &&
         cards.map((card) => (

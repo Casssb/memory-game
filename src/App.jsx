@@ -7,8 +7,13 @@ import {
   shuffleArray,
   returnRequiredCards,
   cacheImage,
+  resetClickedStatus,
 } from './modules/utils/cardHelpers';
-import { addToScore, resetScore } from './modules/utils/gameHelpers';
+import {
+  addToScore,
+  resetScore,
+  shouldIncreaseLevel,
+} from './modules/utils/gameHelpers';
 import cardList from './modules/utils/cardData';
 
 const GlobalStyles = createGlobalStyle`
@@ -30,7 +35,7 @@ const Wrapper = styled.div`
 `;
 
 function App() {
-  const [level, setLevel] = useState(3);
+  const [level, setLevel] = useState(1);
   const [score, setScore] = useState({ score: 0, highScore: 0 });
   const [cards, setCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -47,11 +52,35 @@ function App() {
     setCards(cardsArray);
   }, [level]);
 
-  const handleClick = (e) => {
+  const handleClick = (e, cardName) => {
     e.preventDefault();
     const shuffled = shuffleArray(cards);
-    setCards(shuffled);
-    addToScore(score, setScore);
+    for (const card of shuffled) {
+      if (card.name === cardName) {
+        if (card.clicked) {
+          resetGame();
+        } else {
+          card.clicked = true;
+          addToScore(score, setScore);
+          const requiredCards = returnRequiredCards(level);
+          if (shouldIncreaseLevel(shuffled, requiredCards)) {
+            resetClickedStatus(cardList);
+            setLevel((prev) => prev + 1);
+          } else {
+            setCards(shuffled);
+          }
+        }
+      }
+    }
+  };
+
+  const resetGame = () => {
+    const requiredCards = returnRequiredCards(1);
+    const cardsArray = createCardsArray(cardList, requiredCards);
+    setCards(cardsArray);
+    resetScore(setScore);
+    resetClickedStatus(cardList);
+    setLevel(1)
   };
 
   return (

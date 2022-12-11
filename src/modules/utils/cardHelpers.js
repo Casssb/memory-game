@@ -40,6 +40,12 @@ const returnRequiredCards = (level) => {
   }
 };
 
+const resetClickedStatus = (cardList) => {
+  for (const card of cardList) {
+    card.clicked = false;
+  }
+};
+
 const cacheImage = (card) => {
   return new Promise((resolve, reject) => {
     const imgToLoad = new Image();
@@ -49,4 +55,10 @@ const cacheImage = (card) => {
   });
 };
 
-export { createCardsArray, shuffleArray, returnRequiredCards, cacheImage };
+export {
+  createCardsArray,
+  shuffleArray,
+  returnRequiredCards,
+  cacheImage,
+  resetClickedStatus,
+};

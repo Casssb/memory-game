@@ -44,7 +44,7 @@ const Card = (props) => {
       glareMaxOpacity={0.5}
       scale={1.02}
     >
-      <CardWrapper onClick={(e) => handleClick(e)}>
+      <CardWrapper onClick={(e) => handleClick(e, cardName)}>
         <ImageWrapper>
           <img src={cardImage} alt={cardName} />
         </ImageWrapper>
