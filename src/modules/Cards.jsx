@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from './Card';
+import StartMessage from './StartMessage';
+import WinnerMessage from './EndMessage';
 
 const StyledMain = styled.main`
   width: 100%;
@@ -17,13 +19,22 @@ const StyledMain = styled.main`
 `;
 
 const Cards = (props) => {
-  const { cards, handleClick, cardsLoaded } = props;
+  const { cards, handleClick, cardsLoaded, status, handleButtonClick } = props;
 
   return (
     <StyledMain>
       {!cardsLoaded && <h1>Loading...</h1>}
 
+      {cardsLoaded && status === 'start' && (
+        <StartMessage handleButtonClick={handleButtonClick} status={status} />
+      )}
+
+      {cardsLoaded && status === 'winner' && (
+        <WinnerMessage handleButtonClick={handleButtonClick} status={status} />
+      )}
+
       {cardsLoaded &&
+        status === 'playing' &&
         cards.map((card) => (
           <Card
             cardImage={card.image}

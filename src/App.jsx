@@ -44,6 +44,7 @@ const Wrapper = styled.div`
 function App() {
   const [level, setLevel] = useState(1);
   const [score, setScore] = useState({ score: 0, highScore: 0 });
+  const [status, setStatus] = useState('start');
   const [cards, setCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -73,6 +74,7 @@ function App() {
           addToScore(score, setScore);
           const requiredCards = returnRequiredCards(level);
           if (shouldIncreaseLevel(shuffled, requiredCards)) {
+            level === 5 && setStatus('winner');
             resetClickedStatus(cardList);
             setLoaded(false);
             setLevel((prev) => prev + 1);
@@ -93,12 +95,28 @@ function App() {
     setLevel(1);
   };
 
+  const handleButtonClick = (e, gameStatus) => {
+    e.preventDefault();
+    if (gameStatus === 'start') {
+      setStatus('playing');
+    } else {
+      resetGame();
+      setStatus('playing');
+    }
+  };
+
   return (
     <>
       <GlobalStyles />
       <Wrapper>
         <Header score={score} level={level} />
-        <Cards cards={cards} handleClick={handleClick} cardsLoaded={loaded} />
+        <Cards
+          cards={cards}
+          handleClick={handleClick}
+          cardsLoaded={loaded}
+          status={status}
+          handleButtonClick={handleButtonClick}
+        />
       </Wrapper>
     </>
   );
