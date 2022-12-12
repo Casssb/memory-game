@@ -11,18 +11,23 @@ const CardWrapper = styled.div`
   border: 2px solid white;
   border-radius: 5px;
   padding: 0.4rem;
-  background-color: #0f0b0b;
+  background-color: #2c2c2c;
   width: 10rem;
   height: 15rem;
   text-align: center;
+
+  @media screen and (max-width: 640px) {
+    width: 8rem;
+    height: 10rem;
+    font-size: 0.8rem;
+  }
 
   &:hover {
     cursor: pointer;
   }
 
   & p {
-    color: #006680;
-    font-weight: 700;
+    color: #bb86fc;
   }
 `;
 
@@ -32,6 +37,11 @@ const ImageWrapper = styled.div`
   & img {
     width: 7rem;
     height: 10rem;
+
+    @media screen and (max-width: 640px) {
+      width: 5rem;
+      height: 6rem;
+    }
   }
 `;
 

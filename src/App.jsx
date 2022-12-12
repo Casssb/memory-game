@@ -35,7 +35,7 @@ const GlobalStyles = createGlobalStyle`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #181616;
+  background-color: #121212;
   color: white;
   height: 100%;
   min-height: 100vh;

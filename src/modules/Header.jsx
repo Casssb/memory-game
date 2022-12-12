@@ -9,7 +9,11 @@ const StyledHeader = styled.header`
   align-items: center;
   height: min-content;
   padding: 1rem;
-  background-color: grey;
+  background-color: #2C2C2C;
+
+  @media screen and (max-width: 640px) {
+    flex-direction: column;
+  }
 `;
 
 const Header = (props) => {
