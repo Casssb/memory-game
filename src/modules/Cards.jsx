@@ -10,6 +10,10 @@ const StyledMain = styled.main`
   justify-content: center;
   gap: 0.6rem;
   padding: 4rem;
+
+  @media screen and (max-width: 640px) {
+    padding: 2rem;
+  }
 `;
 
 const Cards = (props) => {
